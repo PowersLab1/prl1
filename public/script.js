@@ -1,16 +1,40 @@
 // Task parameters one might want to change
 const interTrialInterval = 500; // Time in milliseconds for the fixation cross inter-trial-interval
 const feedbackDisplayTime = 1000; // Time in milliseconds for the feedback display
-const maximumResponseTime = 3000; // Time in milliseconds until trial ends w/o  points and tells them they're too slow
+const maximumResponseTime = 5000; // Time in milliseconds until trial ends w/o  points and tells them they're too slow
 const minimumResponseTime = 200; //how long participants cannot choose a stimulus (prevents button mashing)
 const highProbability = 0.85;
 const lowProbability = 0.15;
 const trialsPerShuffle = 1; //the number of trials before the fractal images shuffle position
-let totalTrials = 130; // Adjust as needed -- this n umber * ITI, max response time, and feeedback display should be less than 20 minutes! Currently 15.75 min. Changing to 2.5 -> 14 min. 2.75 -> 14.875
-let totalBlocks = 10;   // Total number of reward probability changes -- KEEP IN MIND meanTrialsPerBlock*TotalBlocks needs to = TotalTrials!!!!!
-let meanTrialsPerBlock = 13; // Average trials per block
-let maxTrialsPerBlock = 25;   // Max number of trials in a block
-let minTrialsPerBlock = 5;   // Min number of trials in a block
+
+
+//SETTINGS FOR HIGH VOLATILITY BLOCKS:
+// let totalTrials = 130; // Adjust as needed -- this n umber * ITI, max response time, and feeedback display should be less than 20 minutes! Currently 15.75 min. Changing to 2.5 -> 14 min. 2.75 -> 14.875
+// let totalBlocks = 10;   // Total number of reward probability changes -- KEEP IN MIND meanTrialsPerBlock*TotalBlocks needs to = TotalTrials!!!!!
+// let meanTrialsPerBlock = 13; // Average trials per block
+// let maxTrialsPerBlock = 25;   // Max number of trials in a block
+// let minTrialsPerBlock = 5;   // Min number of trials in a block
+let totalTrials = 10; // Adjust as needed -- this n umber * ITI, max response time, and feeedback display should be less than 20 minutes! Currently 15.75 min. Changing to 2.5 -> 14 min. 2.75 -> 14.875
+let totalBlocks = 1;   // Total number of reward probability changes -- KEEP IN MIND meanTrialsPerBlock*TotalBlocks needs to = TotalTrials!!!!!
+let meanTrialsPerBlock = 10; // Average trials per block
+let maxTrialsPerBlock = 10;   // Max number of trials in a block
+let minTrialsPerBlock = 10;   // Min number of trials in a block
+
+//SETTINGS FOR LOW VOLATILITY BLOCKS:
+// let lowVolTrials = 130
+// let lowVolBlocks = 5; // Adjusted total number of blocks
+// let lowVolmeanTrialsPerBlock = 26; // Adjusted average trials per block
+// let lowVolmaxTrialsPerBlock = 36; // Adjusted max number of trials in a block
+// let lowVolminTrialsPerBlock = 10; // Adjusted min number of trials in a block
+
+let lowVolTrials = 5
+let lowVolBlocks = 1; // Adjusted total number of blocks
+let lowVolmeanTrialsPerBlock = 5; // Adjusted average trials per block
+let lowVolmaxTrialsPerBlock = 5; // Adjusted max number of trials in a block
+let lowVolminTrialsPerBlock = 5; // Adjusted min number of trials in a block
+
+
+
 const totalTrialVariability = 0; //number of trials the total number of trials can be off by
 
 
@@ -23,9 +47,6 @@ document.addEventListener('keydown', (event) => {
     if (event.key === "q" || event.key === "Q") {
         if (document.getElementById('instruction-screen1').style.display === 'block') {
             document.getElementById('instruction-screen1').style.display = 'none';
-            document.getElementById('instruction-screen2').style.display = 'block';
-        } else if (document.getElementById('instruction-screen2').style.display === 'block') {
-            document.getElementById('instruction-screen2').style.display = 'none';
             document.getElementById('instruction-screen3').style.display = 'block';
         } else if (document.getElementById('instruction-screen3').style.display === 'block') {
             document.getElementById('instruction-screen3').style.display = 'none';
@@ -46,14 +67,7 @@ function shuffleFractals() {
     return fractalIDs;
 }
 
-/* This function draws a random value from a specified distribution 
-  – dist can take values such as "unif" (uniform), "norm" (normal), etc.
-  – param is an array that specifies the parameters of the distribution
-      uniform: [min, max]
-      uniform integer: [min, max]
-      normal:  [mean, sd] 
-      exp:     lambda
-  – n specifies the number of draws */
+
 function drawRandom(dist = "unif", param = [0, 1]) {
 
 // turn param into an object if not already an object:
@@ -64,10 +78,6 @@ if (typeof param !== 'object') {
   p = param;
 }
 
-// ensure that every element of p is numeric:
-// if (p.some(elem => isNaN(elem))) {
-//   throw "Distribution parameters must be numeric."
-// }
 
 // initialize the output variable:
 var x;
@@ -167,22 +177,7 @@ var x;
   
 }
 
-/* This function returns a random number drawn from the poisson distribution with mean = mean. 
-Truncates the distribution at maxVal (default = inf). 
-Shifts distribution by minVal */
-// function randExp(mean, maxVal = Infinity, minVal = 0) {
 
-// // initialize the output variable:
-// let out; 
-
-// // determine the output variable:
-// do {
-//   out = drawRandom("exp", [1.0/(mean - minVal)]) + minVal;
-// } while (out > maxVal)
-
-// return out;
-
-// }
 function randPois(lambda, maxVal = Infinity, minVal = 0) {
   let out;
   do {
@@ -232,13 +227,8 @@ function makeBlocks(nTrials, nBlocks, meanTrialsPerBlock, maxTrialsPerBlock, min
 // Generate block lengths nTrials = totalTrials set at the top, nBlocks = totalBlocks set at the top
 const blocksHighVol = makeBlocks(totalTrials, totalBlocks, meanTrialsPerBlock, maxTrialsPerBlock, minTrialsPerBlock);
 
-// Reassign variables for blocksLowVol
-totalTrials = 130
-totalBlocks = 5; // Adjusted total number of blocks
-meanTrialsPerBlock = 26; // Adjusted average trials per block
-maxTrialsPerBlock = 36; // Adjusted max number of trials in a block
-minTrialsPerBlock = 10; // Adjusted min number of trials in a block
-const blocksLowVol = makeBlocks(totalTrials, totalBlocks, meanTrialsPerBlock, maxTrialsPerBlock, minTrialsPerBlock);
+// Now repeat for low volatility blocks
+const blocksLowVol = makeBlocks(lowVolTrials, lowVolBlocks, lowVolmeanTrialsPerBlock, lowVolmaxTrialsPerBlock, lowVolminTrialsPerBlock);
 
 // Function to shuffle and combine arrays
 function shuffleAndCombine(arr1, arr2) {
@@ -346,6 +336,9 @@ const game = {
         document.getElementById('feedback').style.display = 'none';
         document.getElementById('points').style.display = 'none';
         document.getElementById('fixation-cross').style.display = 'none';
+        document.getElementById("final_message").style.display = 'none';
+
+        
     
         // Delay for 200ms before accepting key presses
         setTimeout(() => {
@@ -363,9 +356,6 @@ const game = {
     
         //snippet below shows what to do if participant hits a key too early during the "waiting" period
         // Inside the endTrial function
-        
-    
-    
         if (this.earlyKeydown) {
             const feedback = document.getElementById("feedback");
             feedback.innerText = "You picked a picture too quickly to have been paying attention. You get 0 points and have to wait 5 seconds";
@@ -402,18 +392,6 @@ const game = {
             this.earlyKeydown = false; // Reset the flag for the next trial
             return; // Exit the function early
         }
-    
-        
-    //     if (this.earlyKeydown) {
-    //     const feedback = document.getElementById("feedback");
-    //     feedback.innerText = "You picked a picture too quickly to have been paying attention. You get $0 and have to wait 5 seconds";
-    //     feedback.style.display = 'block';
-    //     setTimeout(() => {
-    //         feedback.style.display = 'none';
-    //         this.startNextTrial();
-    //     }, 5000); // 5-second delay before next trial
-    //     return; // Exit the function early
-    // }
     
         // Choose the correct indicator based on the choice
         let indicatorId;
@@ -472,7 +450,9 @@ const game = {
             document.getElementById('fractals').style.display = 'none';
             document.getElementById('instruction').style.display = 'none';
             document.getElementById('feedback').style.display = 'block';
-            document.getElementById('points').innerText = `Total Points: ${this.totalPoints}`;
+            // // New total points display with progress:
+            document.getElementById('points').innerHTML = `Total Points: ${this.totalPoints}<br><br>  <small><em>Trials Left: ${(this.trialLimits.reduce((a, b) => a + b, 0))-(this.trials.length + 1)} </small></em>`;
+            // document.getElementById('points').innerText = `Total Points: ${this.totalPoints}`;
             document.getElementById('points').style.display = 'block';
             
             const feedback = document.getElementById("feedback");
@@ -505,32 +485,48 @@ const game = {
             this.updateFractalPositions();
         }
             if (this.trials.length === this.trialLimits.reduce((a, b) => a + b, 0)) {
-                console.log(this.trials);
-                    console.log('Finished the game');
-                    // Convert trials data to JSON string
-                    const trialsDataJson = JSON.stringify(this.trials);
+                console.log('Finished the game.');
+                // console.log(this.trials); //debugging: display the data object raw 
+                // Convert trials data to JSON string
+                const trialsDataJson = JSON.stringify(this.trials);
+                // //We used to display a different finish message. Now we just change the game container display. 
+                // document.getElementById('completion-message').style.display = 'block';
+
+
+                //Remove the feedback display and put up their final score
+                document.getElementById('feedback').style.display = 'none';
+                document.getElementById('points').style.display = 'none';
+                document.getElementById('fixation-cross').style.display = 'none';
+                document.getElementById('final_message').innerHTML = `Well done! You've finished and won: ${this.totalPoints} points! <br><br>  <small><em>Please do not close the window while we save your data and send you back to the survey...</small></em>`;
+                document.getElementById('final_message').style.display = 'block';
+                
+                
+                // Remove keydown event listener and set game state to 'ended'
+                document.removeEventListener('keydown', this.keydownHandler);
+                this.currentState = "ended";
+
+                // Wait 5 seconds so folks see their score before saving the data and trigger the wrapper
+                setTimeout(() => {
+                    document.getElementById('game-container').style.display = 'none';
                     // Save the data in session storage
-                    sessionStorage.setItem('PRL1taskData', trialsDataJson);
                     console.log('Saving to session storage:');
+                    sessionStorage.setItem('PRL1taskData', trialsDataJson);
                     //send data as Message for labjswrapper to nab in event listener
                     window.postMessage({
                         type: 'PRL1labjs.data', 
                         type: 'labjs.data',
                         json: trialsDataJson
                     }, '*');
-                document.getElementById('completion-message').style.display = 'block';
-                document.getElementById('game-container').style.display = 'none';
-                
-                // Remove keydown event listener and set game state to 'ended'
-                document.removeEventListener('keydown', this.keydownHandler);
-                this.currentState = "ended";
-            } else {//if the game is not completed, move onto the probability for the next trial and then move onto startTrial
+                }, 5000);
+            } 
+            
+            else {//if the game is not completed, move onto the probability for the next trial and then move onto startTrial
                 if (this.trials.length === this.trialLimits.slice(0, this.currentProbIndex + 1).reduce((a, b) => a + b, 0)) {
                 this.switchProb();
             }
             this.startTrial();
-        }
-        },
+                }
+        }, //end of startNextTrial
     };
     
     game.keydownHandler = (event) => {
