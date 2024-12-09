@@ -47,9 +47,9 @@ document.addEventListener('keydown', (event) => {
     if (event.key === "q" || event.key === "Q") {
         if (document.getElementById('instruction-screen1').style.display === 'block') {
             document.getElementById('instruction-screen1').style.display = 'none';
-            document.getElementById('instruction-screen3').style.display = 'block';
-        } else if (document.getElementById('instruction-screen3').style.display === 'block') {
-            document.getElementById('instruction-screen3').style.display = 'none';
+            document.getElementById('instruction-screen2').style.display = 'block';
+        } else if (document.getElementById('instruction-screen2').style.display === 'block') {
+            document.getElementById('instruction-screen2').style.display = 'none';
             document.getElementById('game-container').style.display = 'block';
             game.startTrial();
         }
@@ -451,7 +451,7 @@ const game = {
             document.getElementById('instruction').style.display = 'none';
             document.getElementById('feedback').style.display = 'block';
             // // New total points display with progress:
-            document.getElementById('points').innerHTML = `Total Points: ${this.totalPoints}<br><br>  <small><em>Trials Left: ${(this.trialLimits.reduce((a, b) => a + b, 0))-(this.trials.length + 1)} </small></em>`;
+            document.getElementById('points').innerHTML = `Total Points: ${this.totalPoints}<br><br>  <small><em>Trials Left: ${(this.trialLimits.reduce((a, b) => a + b, 0))-(this.trials.length + 1)+1} </small></em>`;
             // document.getElementById('points').innerText = `Total Points: ${this.totalPoints}`;
             document.getElementById('points').style.display = 'block';
             
