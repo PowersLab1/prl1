@@ -56,16 +56,33 @@
             margin-bottom: 20px;
             color: white;
         }
-        #instruction-screen1, #instruction-screen2, #instruction-screen3 {
+
+        /* #instruction-screen1, #instruction-screen2, #instruction-screen3 {
             text-align: center;
             color: white;
             position: fixed;
-            top: 10%; /* Adjust as needed */
+            top: 20%; 
             left: 50%;
             transform: translate(-50%, -20%);
             max-width: 1200px;
             max-width: 98%;
+        }  */
+         
+
+        #instruction-screen1, #instruction-screen2, #instruction-screen3 {
+            text-align: left; /* Align text to the left for better readability */
+            color: white;
+            position: absolute; /* Use absolute positioning */
+            top: 10%; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%); /* Only translate horizontally */
+            width: 98%; /* Adjust to take up more width */
+            max-width: 1200px; /* Set a maximum width for larger screens */
+            padding: 20px; /* Padding for improved readability */
+            background-color: rgba(0, 0, 0, 0.7); /* Optional: Background color for readability */
+            border-radius: 10px; /* Optional: Rounds the container's corners */
         }
+
         .fractals-container {
             display: flex;
             justify-content: center;
