@@ -6,14 +6,13 @@ const minimumResponseTime = 200; //how long participants cannot choose a stimulu
 const highProbability = 0.85;
 const lowProbability = 0.15;
 const trialsPerShuffle = 1; //the number of trials before the fractal images shuffle position
-
-
-//SETTINGS FOR HIGH VOLATILITY BLOCKS:
 // let totalTrials = 130; // Adjust as needed -- this n umber * ITI, max response time, and feeedback display should be less than 20 minutes! Currently 15.75 min. Changing to 2.5 -> 14 min. 2.75 -> 14.875
 // let totalBlocks = 10;   // Total number of reward probability changes -- KEEP IN MIND meanTrialsPerBlock*TotalBlocks needs to = TotalTrials!!!!!
 // let meanTrialsPerBlock = 13; // Average trials per block
 // let maxTrialsPerBlock = 25;   // Max number of trials in a block
 // let minTrialsPerBlock = 5;   // Min number of trials in a block
+
+//SETTINGS FOR HIGH VOLATILITY BLOCKS:
 let totalTrials = 10; // Adjust as needed -- this n umber * ITI, max response time, and feeedback display should be less than 20 minutes! Currently 15.75 min. Changing to 2.5 -> 14 min. 2.75 -> 14.875
 let totalBlocks = 1;   // Total number of reward probability changes -- KEEP IN MIND meanTrialsPerBlock*TotalBlocks needs to = TotalTrials!!!!!
 let meanTrialsPerBlock = 10; // Average trials per block
@@ -21,19 +20,11 @@ let maxTrialsPerBlock = 10;   // Max number of trials in a block
 let minTrialsPerBlock = 10;   // Min number of trials in a block
 
 //SETTINGS FOR LOW VOLATILITY BLOCKS:
-// let lowVolTrials = 130
-// let lowVolBlocks = 5; // Adjusted total number of blocks
-// let lowVolmeanTrialsPerBlock = 26; // Adjusted average trials per block
-// let lowVolmaxTrialsPerBlock = 36; // Adjusted max number of trials in a block
-// let lowVolminTrialsPerBlock = 10; // Adjusted min number of trials in a block
-
 let lowVolTrials = 5
 let lowVolBlocks = 1; // Adjusted total number of blocks
 let lowVolmeanTrialsPerBlock = 5; // Adjusted average trials per block
 let lowVolmaxTrialsPerBlock = 5; // Adjusted max number of trials in a block
 let lowVolminTrialsPerBlock = 5; // Adjusted min number of trials in a block
-
-
 
 const totalTrialVariability = 0; //number of trials the total number of trials can be off by
 
