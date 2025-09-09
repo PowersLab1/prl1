@@ -524,9 +524,9 @@ const game = {
                 // Wait 5 seconds so folks see their score before saving the data and trigger the wrapper
                 setTimeout(() => {
                     document.getElementById('game-container').style.display = 'none';
-                    // Save the data in session storage
-                    console.log('Saving to session storage:');
-                    sessionStorage.setItem('PRL1taskData', trialsDataJson);
+                    // Save the data in local storage
+                    console.log('Saving to local storage:');
+                    localStorage.setItem('PRL1taskData', trialsDataJson);
                     //send data as Message for labjswrapper to nab in event listener
                     window.postMessage({
                         type: 'PRL1labjs.data', 
